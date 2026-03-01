@@ -1,0 +1,21 @@
+name = "edgepdf"
+main = "src/worker.ts"
+compatibility_date = "2024-03-01"
+
+# Custom domain configuration
+routes = [
+  { pattern = "pdf.andog.eu", custom_domain = true }
+]
+
+# R2 Bucket Binding
+[[r2_buckets]]
+binding = "BUCKET"
+bucket_name = "edgepdf-storage"
+preview_bucket_name = "edgepdf-storage-dev"
+
+# D1 Database Binding
+[[d1_databases]]
+binding = "DB"
+database_name = "edgepdf-db"
+database_id = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+preview_database_id = "yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy"

@@ -1,0 +1,5 @@
+{
+  "name": "EdgePDF",
+  "description": "A comprehensive PDF Processing Web Application running on Cloudflare Workers, D1, and R2.",
+  "requestFramePermissions": []
+}
