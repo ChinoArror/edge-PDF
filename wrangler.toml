@@ -20,3 +20,6 @@ bucket_name = "edge-pdf-save"
 binding = "DB"
 database_name = "edge-pdf-db"
 database_id = "cbfde966-6a4f-42ef-80c1-f459224847da"
+
+[vars]
+APP_PASSWORD = "Qwer"

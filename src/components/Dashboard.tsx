@@ -29,21 +29,21 @@ export default function Dashboard({ setIsAuthenticated, isDarkMode, setIsDarkMod
             EdgePDF
           </h1>
         </div>
-        
+
         <div className="flex items-center gap-4">
           <div className="hidden md:block text-xs font-mono bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 px-3 py-1.5 rounded-full border border-green-200 dark:border-green-800/50 shadow-inner">
             {health}
           </div>
-          
-          <button 
+
+          <button
             onClick={() => setIsDarkMode(!isDarkMode)}
             className="p-2.5 rounded-full bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-600 dark:text-zinc-300 transition-all duration-300 hover:scale-110 hover:rotate-12"
             title="Toggle Theme"
           >
             {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
           </button>
-          
-          <button 
+
+          <button
             onClick={handleLogout}
             className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-500/20 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md font-bold"
           >
@@ -60,22 +60,20 @@ export default function Dashboard({ setIsAuthenticated, isDarkMode, setIsDarkMod
             <div className="flex border-b border-zinc-200 dark:border-zinc-800">
               <button
                 onClick={() => setActiveTab('upload')}
-                className={`flex-1 py-5 px-6 text-sm font-bold flex items-center justify-center gap-2 transition-all duration-300 ${
-                  activeTab === 'upload' 
-                    ? 'text-purple-600 dark:text-purple-400 border-b-2 border-purple-600 dark:border-purple-400 bg-purple-50/50 dark:bg-purple-500/10' 
+                className={`flex-1 py-5 px-6 text-sm font-bold flex items-center justify-center gap-2 transition-all duration-300 ${activeTab === 'upload'
+                    ? 'text-purple-600 dark:text-purple-400 border-b-2 border-purple-600 dark:border-purple-400 bg-purple-50/50 dark:bg-purple-500/10'
                     : 'text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 hover:bg-zinc-50 dark:hover:bg-zinc-800/50'
-                }`}
+                  }`}
               >
                 <FileUp className={`w-5 h-5 ${activeTab === 'upload' ? 'animate-bounce' : ''}`} />
                 Local Upload
               </button>
               <button
                 onClick={() => setActiveTab('r2')}
-                className={`flex-1 py-5 px-6 text-sm font-bold flex items-center justify-center gap-2 transition-all duration-300 ${
-                  activeTab === 'r2' 
-                    ? 'text-green-600 dark:text-green-400 border-b-2 border-green-600 dark:border-green-400 bg-green-50/50 dark:bg-green-500/10' 
+                className={`flex-1 py-5 px-6 text-sm font-bold flex items-center justify-center gap-2 transition-all duration-300 ${activeTab === 'r2'
+                    ? 'text-green-600 dark:text-green-400 border-b-2 border-green-600 dark:border-green-400 bg-green-50/50 dark:bg-green-500/10'
                     : 'text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 hover:bg-zinc-50 dark:hover:bg-zinc-800/50'
-                }`}
+                  }`}
               >
                 <Cloud className={`w-5 h-5 ${activeTab === 'r2' ? 'animate-pulse' : ''}`} />
                 Select from R2
@@ -129,7 +127,7 @@ export default function Dashboard({ setIsAuthenticated, isDarkMode, setIsDarkMod
               </div>
               <h2 className="text-xl font-extrabold">PDF Settings</h2>
             </div>
-            
+
             <div className="space-y-5">
               <div className="group">
                 <label className="block text-sm font-bold text-zinc-700 dark:text-zinc-300 mb-2 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">Page Size</label>
@@ -139,7 +137,7 @@ export default function Dashboard({ setIsAuthenticated, isDarkMode, setIsDarkMod
                   <option>Fit to Image</option>
                 </select>
               </div>
-              
+
               <div className="group">
                 <label className="block text-sm font-bold text-zinc-700 dark:text-zinc-300 mb-2 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">Orientation</label>
                 <select className="w-full rounded-2xl border-2 border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50 px-4 py-3.5 text-sm font-medium focus:ring-0 focus:border-purple-500 dark:focus:border-purple-500 transition-all outline-none cursor-pointer hover:border-purple-400 dark:hover:border-purple-500/50">
@@ -148,25 +146,6 @@ export default function Dashboard({ setIsAuthenticated, isDarkMode, setIsDarkMod
                   <option>Auto</option>
                 </select>
               </div>
-            </div>
-          </div>
-
-          {/* Security */}
-          <div className="bg-white dark:bg-zinc-900 rounded-3xl shadow-lg shadow-zinc-200/50 dark:shadow-none border border-zinc-200 dark:border-zinc-800 p-6 hover:shadow-xl transition-shadow duration-300">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="p-2.5 bg-red-100 dark:bg-red-500/20 text-red-600 dark:text-red-400 rounded-xl">
-                <Shield className="w-5 h-5" />
-              </div>
-              <h2 className="text-xl font-extrabold">Protection</h2>
-            </div>
-            
-            <div className="group">
-              <label className="block text-sm font-bold text-zinc-700 dark:text-zinc-300 mb-2 group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors">Password (Optional)</label>
-              <input 
-                type="password" 
-                placeholder="Leave blank for no password"
-                className="w-full rounded-2xl border-2 border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50 px-4 py-3.5 text-sm font-medium focus:ring-0 focus:border-red-500 dark:focus:border-red-500 transition-all outline-none hover:border-red-400 dark:hover:border-red-500/50"
-              />
             </div>
           </div>
 
