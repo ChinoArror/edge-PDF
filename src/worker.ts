@@ -33,4 +33,39 @@ app.post('/api/login', async (c) => {
   }
 });
 
+// List R2 files
+app.get('/api/r2/files', async (c) => {
+  try {
+    // If BUCKET is undefined (e.g. running in express dev without proper binding), mock it
+    if (!c.env.BUCKET) {
+      return c.json({ success: true, files: [] });
+    }
+    const list = await c.env.BUCKET.list();
+    return c.json({ success: true, files: list.objects });
+  } catch (err: any) {
+    return c.json({ success: false, message: err.message }, 500);
+  }
+});
+
+// Upload to R2
+app.post('/api/r2/upload', async (c) => {
+  try {
+    if (!c.env.BUCKET) {
+      return c.json({ success: false, message: 'R2 Bucket not configured' }, 500);
+    }
+    const formData = await c.req.parseBody();
+    const file = formData['file'] as File;
+    if (!file) {
+      return c.json({ success: false, message: 'No file provided' }, 400);
+    }
+    const key = (formData['key'] as string) || file.name;
+    await c.env.BUCKET.put(key, await file.arrayBuffer(), {
+      httpMetadata: { contentType: file.type }
+    });
+    return c.json({ success: true, key });
+  } catch (err: any) {
+    return c.json({ success: false, message: err.message }, 500);
+  }
+});
+
 export default app;

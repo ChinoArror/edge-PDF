@@ -1,6 +1,7 @@
 import express from 'express';
 import { serve } from '@hono/node-server';
 import { createServer as createViteServer } from 'vite';
+import { Readable } from 'stream';
 import workerApp from './src/worker.js';
 
 async function startServer() {
@@ -14,13 +15,15 @@ async function startServer() {
     // But since we are using express, we can just pass the request to hono
     // A simple way is to use the fetch API
     const url = new URL(req.url, `http://${req.headers.host}`);
-    const init = {
+    const init: any = {
       method: req.method,
       headers: req.headers as any,
-      body: req.method !== 'GET' && req.method !== 'HEAD' ? req.body : undefined,
+      body: req.method !== 'GET' && req.method !== 'HEAD'
+        ? Readable.toWeb(req) : undefined,
+      duplex: 'half'
     };
-    
-    workerApp.fetch(new Request(url.href, init), { BUCKET: {} as any, DB: {} as any })
+
+    Promise.resolve(workerApp.fetch(new Request(url.href, init), { BUCKET: {} as any, DB: {} as any }))
       .then(async (response) => {
         res.status(response.status);
         response.headers.forEach((value, key) => {
