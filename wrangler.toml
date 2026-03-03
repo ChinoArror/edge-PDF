@@ -9,6 +9,8 @@ routes = [
 
 [assets]
 directory = "dist"
+not_found_handling = "single-page-application"
+binding = "ASSETS"
 
 # R2 Bucket Binding
 [[r2_buckets]]
@@ -23,3 +25,4 @@ database_id = "cbfde966-6a4f-42ef-80c1-f459224847da"
 
 [vars]
 APP_PASSWORD = "Qwer"
+SSO_SECRET = "a9caca6a-bc73-4b95-a0da-d90456571f05"

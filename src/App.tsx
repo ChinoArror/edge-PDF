@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
+import SsoCallback from './components/SsoCallback';
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -24,23 +25,27 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route 
-          path="/login" 
-          element={<Login setAuth={setIsAuthenticated} />} 
+        <Route
+          path="/login"
+          element={<Login setAuth={setIsAuthenticated} />}
         />
-        <Route 
-          path="/" 
+        <Route
+          path="/sso-callback"
+          element={<SsoCallback setAuth={setIsAuthenticated} />}
+        />
+        <Route
+          path="/"
           element={
             isAuthenticated ? (
-              <Dashboard 
-                setIsAuthenticated={setIsAuthenticated} 
+              <Dashboard
+                setIsAuthenticated={setIsAuthenticated}
                 isDarkMode={isDarkMode}
                 setIsDarkMode={setIsDarkMode}
               />
             ) : (
               <Navigate to="/login" />
             )
-          } 
+          }
         />
       </Routes>
     </BrowserRouter>

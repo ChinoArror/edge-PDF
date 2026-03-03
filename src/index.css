@@ -4,4 +4,4 @@
     --color-*: initial;
 }
 
-@custom-variant dark (&:is(.dark *));
+@custom-variant dark (&:where(.dark *, .dark));
