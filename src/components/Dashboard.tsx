@@ -49,13 +49,25 @@ export default function Dashboard({ setIsAuthenticated, isDarkMode, setIsDarkMod
     };
   }, []);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    // 1. Clear local storage first (instant feedback)
     localStorage.removeItem('auth');
     localStorage.removeItem('sso_token');
     localStorage.removeItem('user_name');
     localStorage.removeItem('user_uuid');
-    setIsAuthenticated(false);
+
+    // 2. Call backend signout: clears app_session cookie AND proxies to Auth Center
+    //    so the sso_session cookie on accounts.aryuki.com is also cleared.
+    try {
+      await fetch('/api/signout', { method: 'POST', credentials: 'include' });
+    } catch {
+      // Non-fatal: proceed to login even if the request fails
+    }
+
+    // 3. Hard-navigate to /login so the next SSO flow always shows the login form
+    window.location.href = '/login';
   };
+
 
   // ─ Helpers ─────────────────────────────────────────────────────────────────
   async function fileToImageBytes(file: File): Promise<{ bytes: ArrayBuffer; type: string }> {
