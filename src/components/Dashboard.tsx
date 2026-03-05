@@ -49,23 +49,17 @@ export default function Dashboard({ setIsAuthenticated, isDarkMode, setIsDarkMod
     };
   }, []);
 
-  const handleLogout = async () => {
+  const handleLogout = () => {
     // 1. Clear local storage first (instant feedback)
     localStorage.removeItem('auth');
     localStorage.removeItem('sso_token');
     localStorage.removeItem('user_name');
     localStorage.removeItem('user_uuid');
 
-    // 2. Call backend signout: clears app_session cookie AND proxies to Auth Center
-    //    so the sso_session cookie on accounts.aryuki.com is also cleared.
-    try {
-      await fetch('/api/signout', { method: 'POST', credentials: 'include' });
-    } catch {
-      // Non-fatal: proceed to login even if the request fails
-    }
-
-    // 3. Hard-navigate to /login so the next SSO flow always shows the login form
-    window.location.href = '/login';
+    // 2. Redirect to Auth Center to clear the SSO cookie
+    const SSO_URL = 'https://accounts.aryuki.com';
+    const afterLogoutUrl = encodeURIComponent(window.location.origin + '/login');
+    window.location.href = `${SSO_URL}/logout?redirect=${afterLogoutUrl}`;
   };
 
 

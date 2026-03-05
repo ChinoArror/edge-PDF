@@ -178,28 +178,6 @@ app.post('/api/track', async (c) => {
   }
 });
 
-// ─── Sign-Out endpoint ────────────────────────────────────────────────────────
-// Clears the local app_session cookie and proxies the logout to Auth Center
-// so the sso_session cookie on accounts.aryuki.com is also cleared.
-app.post('/api/signout', async (c) => {
-  // 1. Clear local app_session cookie
-  c.header('Set-Cookie', 'app_session=; Path=/; Max-Age=0; HttpOnly; SameSite=Lax');
-
-  // 2. Forward the browser's cookies to Auth Center so the sso_session is cleared
-  try {
-    await fetch('https://accounts.aryuki.com/api/logout', {
-      method: 'POST',
-      headers: { 'Cookie': c.req.header('Cookie') || '' },
-      signal: AbortSignal.timeout(5000),
-    });
-  } catch (e: any) {
-    // Non-fatal: even if auth-center is unreachable, we still clear local state
-    console.warn('Auth Center logout failed:', e?.message);
-  }
-
-  return c.json({ success: true });
-});
-
 // ─── List R2 files ────────────────────────────────────────────────────────────
 app.get('/api/r2/files', async (c) => {
   try {
